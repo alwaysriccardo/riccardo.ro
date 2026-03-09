@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>riccardo.ro — Premium Web Design Agency</title>
+  <meta name="description" content="We design and build premium websites that convert visitors into clients. Custom web design, development, and conversion optimization.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #FFFFFF;
+      --accent: #7BA7C2;
+      --accent-hover: #5d8fad;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-300: #d4d4d4;
+      --gray-400: #a3a3a3;
+      --gray-500: #737373;
+      --gray-600: #525252;
+      --gray-700: #404040;
+      --gray-800: #262626;
+      --gray-900: #171717;
+    }
+
+    html {
+      scroll-behavior: auto; /* Lenis handles this */
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ============================================
+       NAVBAR
+       ============================================ */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .navbar.scrolled {
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--black);
+    }
+
+    .navbar-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .navbar-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      transition: color 0.3s ease;
+    }
+
+    .navbar-links a:hover {
+      color: var(--black);
+    }
+
+    .navbar-cta {
+      padding: 0.7rem 1.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--black);
+      border-radius: 100px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .navbar-cta:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(123, 167, 194, 0.3);
+    }
+
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--black);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--white);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu a {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    /* ============================================
+       HERO — LION SCROLL ANIMATION
+       ============================================ */
+    .hero-scroll-container {
+      position: relative;
+      height: 500vh; /* Scroll distance for animation */
+    }
+
+    .hero-pinned {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #lion-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      z-index: 10;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.95;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--gray-500);
+      max-width: 500px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      background: var(--black);
+      border-radius: 100px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(123, 167, 194, 0.35);
+    }
+
+    .btn-secondary {
+      padding: 1rem 2.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--black);
+      background: transparent;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 100px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* ============================================
+       SECTIONS — SHARED
+       ============================================ */
+    .section {
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-subtitle {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-weight: 300;
+      color: var(--gray-500);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--accent);
+      margin: 3rem 0;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================
+       PROBLEM SECTION
+       ============================================ */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+
+    .problem-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .problem-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+
+    .problem-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 12px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .problem-item:hover .problem-icon {
+      background: var(--accent);
+    }
+
+    .problem-item:hover .problem-icon svg {
+      stroke: var(--white);
+    }
+
+    .problem-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gray-600);
+      transition: stroke 0.3s ease;
+    }
+
+    .problem-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .problem-item p {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    .problem-cta-area {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2rem;
+    }
+
+    .problem-cta-text {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      color: var(--black);
+    }
+
+    .problem-cta-text span {
+      color: var(--accent);
+    }
+
+    /* ============================================
+       SERVICES SECTION
+       ============================================ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      padding: 2.5rem;
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(123, 167, 194, 0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: all 0.4s ease;
+    }
+
+    .service-card:hover .service-card-icon {
+      background: var(--accent);
+    }
+
+    .service-card:hover .service-card-icon svg {
+      stroke: var(--white);
+    }
+
+    .service-card-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--gray-600);
+      transition: stroke 0.4s ease;
+    }
+
+    .service-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       PROCESS SECTION
+       ============================================ */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+      padding: 2rem 1rem;
+    }
+
+    .process-step::after {
+      content: '';
+      position: absolute;
+      top: 3.5rem;
+      right: -1rem;
+      width: 2rem;
+      height: 1px;
+      background: var(--gray-300);
+    }
+
+    .process-step:last-child::after {
+      display: none;
+    }
+
+    .process-number {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .process-icon-wrapper {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      transition: all 0.4s ease;
+    }
+
+    .process-step:hover .process-icon-wrapper {
+      background: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(123, 167, 194, 0.3);
+    }
+
+    .process-step:hover .process-icon-wrapper svg {
+      stroke: var(--white);
+    }
+
+    .process-icon-wrapper svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gray-600);
+      transition: stroke 0.4s ease;
+    }
+
+    .process-step h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .process-step p {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       QUOTE SECTION
+       ============================================ */
+    .quote-section {
+      text-align: center;
+      padding: 10rem 2rem;
+      position: relative;
+    }
+
+    .quote-section .section-inner {
+      max-width: 800px;
+    }
+
+    .quote-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .quote-title span {
+      color: var(--accent);
+    }
+
+    .quote-subtitle {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--gray-500);
+      max-width: 500px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    .quote-btn {
+      padding: 1.2rem 3.5rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--black);
+      border-radius: 100px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-block;
+    }
+
+    .quote-btn:hover {
+      background: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(123, 167, 194, 0.35);
+    }
+
+    /* Decorative line */
+    .quote-deco {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--gray-300), transparent);
+      margin: 0 auto 3rem;
+    }
+
+    /* ============================================
+       CONTACT SECTION
+       ============================================ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 1rem 1.2rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 12px;
+      background: var(--white);
+      color: var(--black);
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(123, 167, 194, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-submit {
+      padding: 1.1rem 2.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--black);
+      border-radius: 100px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(123, 167, 194, 0.3);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .contact-info-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info-desc {
+      font-size: 1rem;
+      color: var(--gray-500);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .contact-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 16px;
+      transition: all 0.4s ease;
+    }
+
+    .contact-action-btn:hover {
+      border-color: var(--accent);
+      transform: translateX(6px);
+    }
+
+    .contact-action-btn .action-icon {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      border-radius: 12px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .contact-action-btn:hover .action-icon {
+      background: var(--accent);
+    }
+
+    .contact-action-btn:hover .action-icon svg {
+      stroke: var(--white);
+    }
+
+    .action-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--gray-600);
+      transition: stroke 0.3s ease;
+    }
+
+    .action-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+    }
+
+    .action-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--black);
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 968px) {
+      .navbar-links {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-step::after {
+        display: none;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .contact-info {
+        order: -1;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        padding: 5rem 1.5rem;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+        text-align: center;
+      }
+
+      .quote-section {
+        padding: 6rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================
+       NAVBAR
+       ============================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="navbar-logo">riccardo.ro</a>
+
+      <div class="navbar-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+        <a href="#quote" class="navbar-cta">Request a Quote</a>
+      </div>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="closeMobile()">Services</a>
+    <a href="#process" onclick="closeMobile()">Process</a>
+    <a href="#contact" onclick="closeMobile()">Contact</a>
+    <a href="#quote" onclick="closeMobile()" class="btn-primary" style="margin-top:1rem;">Request a Quote</a>
+  </div>
+
+  <!-- ============================================
+       HERO — SCROLL-DRIVEN LION ANIMATION
+       ============================================ -->
+  <section class="hero-scroll-container" id="hero">
+    <div class="hero-pinned" id="heroPinned">
+      <canvas id="lion-canvas"></canvas>
+
+      <div class="hero-overlay">
+        <p class="hero-label" id="heroLabel">Web Design Studio</p>
+        <h1 class="hero-title" id="heroTitle">We Build<br>Digital Empires.</h1>
+        <p class="hero-subtitle" id="heroSubtitle">Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.</p>
+        <div class="hero-buttons" id="heroButtons">
+          <a href="#quote" class="btn-primary">Request a Quote</a>
+          <a href="#contact" class="btn-secondary">Book a Call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PROBLEM SECTION
+       ============================================ -->
+  <section class="section" id="problem">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">The Problem</p>
+        <h2 class="section-title">Your Website Is<br>Costing You Clients.</h2>
+        <p class="section-subtitle">Most businesses lose thousands in potential revenue every month because their website fails to perform.</p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-list reveal" style="transition-delay: 0.1s">
+          <div class="problem-item">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+            </div>
+            <div>
+              <h4>Outdated Design</h4>
+              <p>A website that looks like it was built five years ago destroys trust instantly. First impressions are everything.</p>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h4>Painfully Slow</h4>
+              <p>Every second of load time costs you conversions. Slow sites hemorrhage visitors before they even see your offer.</p>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <line x1="19" y1="8" x2="19" y2="14"></line>
+              </svg>
+            </div>
+            <div>
+              <h4>Poor User Experience</h4>
+              <p>Confusing navigation, broken layouts, no mobile optimization — visitors leave frustrated and never return.</p>
+            </div>
+          </div>
+
+          <div class="problem-item">
+            <div class="problem-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <div>
+              <h4>Zero Lead Generation</h4>
+              <p>A beautiful website means nothing if it doesn't convert visitors into paying clients. Traffic without conversion is waste.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="problem-cta-area reveal" style="transition-delay: 0.2s">
+          <p class="problem-cta-text">
+            Your competitors are investing in their digital presence right now.
+            <span>Don't get left behind.</span>
+          </p>
+          <div class="section-divider"></div>
+          <a href="#quote" class="btn-primary">Transform Your Website</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       SERVICES SECTION
+       ============================================ -->
+  <section class="section" id="services" style="border-top: 1px solid var(--gray-200);">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">What We Do</p>
+        <h2 class="section-title">Precision-Crafted<br>Digital Experiences.</h2>
+        <p class="section-subtitle">Every project is custom. Every detail is intentional. We don't do templates — we build weapons.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal" style="transition-delay: 0.05s">
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+              <path d="M2 2l7.586 7.586"></path>
+              <circle cx="11" cy="11" r="2"></circle>
+            </svg>
+          </div>
+          <h3>Website Design</h3>
+          <p>Bespoke visual identities and UI design that stop the scroll. We create designs that feel premium, modern, and unmistakably yours.</p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay: 0.1s">
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+          </div>
+          <h3>Website Development</h3>
+          <p>Clean, semantic, blazing-fast code. Hand-crafted front-end and back-end development with performance as a non-negotiable priority.</p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay: 0.15s">
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <h3>Conversion Optimization</h3>
+          <p>Data-driven UX strategy that turns passive visitors into active leads. Every element positioned to guide the user toward action.</p>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay: 0.2s">
+          <div class="service-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
+            </svg>
+          </div>
+          <h3>Website Redesign</h3>
+          <p>Already have a site that underperforms? We strip it down and rebuild it into a high-converting machine without losing your brand identity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PROCESS SECTION
+       ============================================ -->
+  <section class="section" id="process" style="border-top: 1px solid var(--gray-200);">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">How We Work</p>
+        <h2 class="section-title">Four Steps.<br>One Vision.</h2>
+        <p class="section-subtitle">A streamlined, transparent process designed to deliver exceptional results without the complexity.</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal" style="transition-delay: 0.05s">
+          <p class="process-number">01</p>
+          <div class="process-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h3>Strategy</h3>
+          <p>We study your market, audience, and goals to define a clear digital roadmap.</p>
+        </div>
+
+        <div class="process-step reveal" style="transition-delay: 0.1s">
+          <p class="process-number">02</p>
+          <div class="process-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+              <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+              <path d="M2 2l7.586 7.586"></path>
+              <circle cx="11" cy="11" r="2"></circle>
+            </svg>
+          </div>
+          <h3>Design</h3>
+          <p>Pixel-perfect mockups crafted to reflect your brand at its most powerful.</p>
+        </div>
+
+        <div class="process-step reveal" style="transition-delay: 0.15s">
+          <p class="process-number">03</p>
+          <div class="process-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+          </div>
+          <h3>Development</h3>
+          <p>Clean, fast, semantic code built to perform flawlessly on every device.</p>
+        </div>
+
+        <div class="process-step reveal" style="transition-delay: 0.2s">
+          <p class="process-number">04</p>
+          <div class="process-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 2L11 13"></path>
+              <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+            </svg>
+          </div>
+          <h3>Launch</h3>
+          <p>We deploy, test, and optimize — then watch your business grow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CUSTOM QUOTE SECTION
+       ============================================ -->
+  <section class="quote-section section" id="quote" style="border-top: 1px solid var(--gray-200);">
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="quote-deco"></div>
+        <p class="section-label" style="text-align:center;">Start Your Project</p>
+        <h2 class="quote-title">Let's Build<br>Something <span>Remarkable.</span></h2>
+        <p class="quote-subtitle">Every project is unique. Tell us about your vision and we'll craft a bespoke proposal tailored to your goals, timeline, and budget.</p>
+        <a href="#contact" class="quote-btn">Request Your Custom Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CONTACT SECTION
+       ============================================ -->
+  <section class="section" id="contact" style="border-top: 1px solid var(--gray-200);">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Ready to Start?</h2>
+        <p class="section-subtitle">Fill out the form below or reach out directly. We respond within 24 hours.</p>
+      </div>
+
+      <div class="contact-grid">
+        <form class="contact-form reveal" style="transition-delay: 0.1s" onsubmit="event.preventDefault()">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="you@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" placeholder="Your company name">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell us about your project..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message</button>
+        </form>
+
+        <div class="contact-info reveal" style="transition-delay: 0.2s">
+          <div>
+            <h3 class="contact-info-title">Let's talk about<br>your next project.</h3>
+            <p class="contact-info-desc">Whether you need a brand-new website or a complete redesign, we're ready to make it happen. No obligation, no pressure — just a conversation about possibilities.</p>
+          </div>
+
+          <div class="contact-actions">
+            <a href="tel:+1234567890" class="contact-action-btn">
+              <div class="action-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="action-label">Call Us</p>
+                <p class="action-value">Schedule a Call</p>
+              </div>
+            </a>
+
+            <a href="mailto:hello@riccardo.ro" class="contact-action-btn">
+              <div class="action-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="action-label">Email Us</p>
+                <p class="action-value">hello@riccardo.ro</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-copy">&copy; 2026 riccardo.ro — All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================
+       SCRIPTS
+       ============================================ -->
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+  <script>
+    // ============================================
+    // LENIS SMOOTH SCROLLING
+    // ============================================
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Connect Lenis to GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // ============================================
+    // NAVBAR SCROLL EFFECT
+    // ============================================
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // ============================================
+    // MOBILE MENU
+    // ============================================
+    const mobileToggle = document.getElementById('mobileToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMobile() {
+      mobileMenu.classList.remove('open');
+    }
+
+    // ============================================
+    // LION SCROLL ANIMATION — CANVAS
+    // ============================================
+    const canvas = document.getElementById('lion-canvas');
+    const ctx = canvas.getContext('2d');
+    const frameCount = 192;
+    const images = [];
+    let loadedCount = 0;
+
+    // Set canvas dimensions
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Frame path helper
+    function framePath(index) {
+      return `./frames/frame_${String(index).padStart(3, '0')}.jpg`;
+    }
+
+    // Preload all frames
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.src = framePath(i);
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === 1) {
+          drawFrame(0);
+        }
+      };
+      images[i] = img;
+    }
+
+    // Draw a specific frame to canvas (cover fit)
+    function drawFrame(index) {
+      if (!images[index] || !images[index].complete) return;
+      const img = images[index];
+
+      const cw = canvas.width;
+      const ch = canvas.height;
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
+
+      const scale = Math.max(cw / iw, ch / ih);
+      const sw = iw * scale;
+      const sh = ih * scale;
+      const sx = (cw - sw) / 2;
+      const sy = (ch - sh) / 2;
+
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, sx, sy, sw, sh);
+    }
+
+    // Current frame tracker
+    const animState = { frame: 0 };
+
+    // GSAP ScrollTrigger — pin the hero and scrub frames
+    gsap.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom bottom',
+      pin: '#heroPinned',
+      onUpdate: (self) => {
+        const frameIndex = Math.min(
+          frameCount - 1,
+          Math.floor(self.progress * frameCount)
+        );
+        if (frameIndex !== animState.frame) {
+          animState.frame = frameIndex;
+          drawFrame(frameIndex);
+        }
+      }
+    });
+
+    // Hero text reveal animation
+    const heroTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: '20% top',
+        scrub: 1,
+      }
+    });
+
+    heroTl
+      .to('#heroLabel', { opacity: 1, y: 0, duration: 0.3 }, 0)
+      .to('#heroTitle', { opacity: 1, y: 0, duration: 0.4 }, 0.1)
+      .to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.3 }, 0.2)
+      .to('#heroButtons', { opacity: 1, y: 0, duration: 0.3 }, 0.3);
+
+    // ============================================
+    // SCROLL REVEAL — INTERSECTION OBSERVER
+    // ============================================
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ============================================
+    // SMOOTH ANCHOR SCROLLING
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          lenis.scrollTo(target, { offset: -80 });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
