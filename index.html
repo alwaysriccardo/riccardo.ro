@@ -207,60 +207,7 @@
       transform: translateZ(0);
     }
 
-    /* Preloader */
-    .preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: var(--white);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-    }
 
-    .preloader.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .preloader-text {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-    }
-
-    .preloader-bar-track {
-      width: 200px;
-      height: 2px;
-      background: var(--gray-200);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .preloader-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--black);
-      border-radius: 2px;
-      transition: width 0.15s ease;
-    }
-
-    .preloader-percent {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--black);
-      font-variant-numeric: tabular-nums;
-    }
 
     .hero-overlay {
       position: absolute;
@@ -1024,14 +971,6 @@
     <div class="hero-pinned" id="heroPinned">
       <canvas id="lion-canvas"></canvas>
 
-      <!-- Preloader -->
-      <div class="preloader" id="preloader">
-        <p class="preloader-text">Loading Experience</p>
-        <div class="preloader-bar-track">
-          <div class="preloader-bar-fill" id="preloaderFill"></div>
-        </div>
-        <p class="preloader-percent" id="preloaderPercent">0%</p>
-      </div>
 
       <div class="hero-overlay">
         <p class="hero-label" id="heroLabel">Web Design Studio</p>
@@ -1414,18 +1353,9 @@
     const ctx = canvas.getContext('2d', { alpha: false });
     const frameCount = 192;
     const images = new Array(frameCount);
-    let loadedCount = 0;
     let rafPending = false;
     let targetFrame = 0;
     let currentFrame = -1;
-
-    // Preloader elements
-    const preloader = document.getElementById('preloader');
-    const preloaderFill = document.getElementById('preloaderFill');
-    const preloaderPercent = document.getElementById('preloaderPercent');
-
-    // Lock scroll during preload
-    document.body.style.overflow = 'hidden';
 
     // Set canvas to device pixel ratio for crispness, capped for performance
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -1437,7 +1367,6 @@
       canvas.style.width = w + 'px';
       canvas.style.height = h + 'px';
       ctx.scale(dpr, dpr);
-      // Redraw current frame after resize
       if (currentFrame >= 0) drawFrameImmediate(currentFrame);
     }
     resizeCanvas();
@@ -1448,7 +1377,7 @@
       return './frames/frame_' + String(index).padStart(3, '0') + '.jpg';
     }
 
-    // Draw a specific frame to canvas (cover fit) — immediate
+    // Draw a specific frame to canvas (cover fit)
     function drawFrameImmediate(index) {
       const img = images[index];
       if (!img || !img.complete || !img.naturalWidth) return;
@@ -1482,46 +1411,16 @@
       }
     }
 
-    // Preload all frames with progress tracking
-    function preloadFrames() {
-      return new Promise((resolve) => {
-        let loaded = 0;
-        for (let i = 0; i < frameCount; i++) {
-          const img = new Image();
-          img.decoding = 'async';
-          img.src = framePath(i);
-          const onDone = () => {
-            loaded++;
-            const pct = Math.round((loaded / frameCount) * 100);
-            preloaderFill.style.width = pct + '%';
-            preloaderPercent.textContent = pct + '%';
-
-            // Draw first frame as soon as it loads
-            if (i === 0 && img.complete && img.naturalWidth) {
-              drawFrameImmediate(0);
-            }
-
-            if (loaded === frameCount) resolve();
-          };
-          img.onload = onDone;
-          img.onerror = onDone; // Don't block on failed frames
-          images[i] = img;
-        }
-      });
+    // Load all frames in background — no blocking, no preloader
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = framePath(i);
+      if (i === 0) {
+        img.onload = () => drawFrameImmediate(0);
+      }
+      images[i] = img;
     }
-
-    // Start loading
-    preloadFrames().then(() => {
-      // Hide preloader & unlock scroll
-      preloader.classList.add('hidden');
-      document.body.style.overflow = '';
-
-      // Refresh ScrollTrigger after unlocking
-      ScrollTrigger.refresh();
-
-      // Draw frame 0
-      drawFrameImmediate(0);
-    });
 
     // GSAP ScrollTrigger — pin the hero and scrub frames
     gsap.registerPlugin(ScrollTrigger);
