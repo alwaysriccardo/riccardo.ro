@@ -1131,8 +1131,8 @@
 
       <div class="hero-overlay">
         <p class="hero-label" id="heroLabel" data-i18n="hero_label">Web Design Studio</p>
-        <h1 class="hero-title" id="heroTitle" data-i18n="hero_title" data-i18n-html="1">We Build<br>Digital Empires.</h1>
-        <p class="hero-subtitle" id="heroSubtitle" data-i18n="hero_subtitle">Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.</p>
+        <h1 class="hero-title" id="heroTitle" data-i18n="hero_title" data-i18n-html="1">Fă-ți Brandul Auzit<br>În Jungla Digitală.</h1>
+        <p class="hero-subtitle" id="heroSubtitle" data-i18n="hero_subtitle">Site-uri premium concepute să domine piața ta. Fiecare pixel, fiecare interacțiune — proiectat să convertească.</p>
         <div class="hero-buttons" id="heroButtons">
           <a href="#quote" class="btn-primary" data-i18n="hero_cta1">Request a Quote</a>
           <a href="#contact" class="btn-secondary" data-i18n="hero_cta2">Book a Call</a>
@@ -1626,6 +1626,12 @@
     // GSAP ScrollTrigger — pin the hero and scrub frames
     gsap.registerPlugin(ScrollTrigger);
 
+    // Preload lion roar audio
+    const lionRoar = new Audio('./lion-roar.mp3');
+    lionRoar.preload = 'auto';
+    lionRoar.volume = 0.4;
+    let roarPlayed = false;
+
     ScrollTrigger.create({
       trigger: '#hero',
       start: 'top top',
@@ -1637,6 +1643,16 @@
           Math.floor(self.progress * frameCount)
         );
         scheduleFrame(frameIndex);
+
+        // Play lion roar once when animation nears completion
+        if (self.progress > 0.92 && !roarPlayed) {
+          roarPlayed = true;
+          lionRoar.play().catch(() => {}); // Silent fail if blocked
+        }
+        // Reset if user scrolls back up
+        if (self.progress < 0.5) {
+          roarPlayed = false;
+        }
       }
     });
 
@@ -1694,7 +1710,7 @@
     const translations = {
       en: {
         nav_services: 'Services', nav_process: 'Process', nav_contact: 'Contact', nav_cta: 'Request a Quote',
-        hero_label: 'Web Design Studio', hero_title: 'We Build<br>Digital Empires.', hero_subtitle: 'Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.', hero_cta1: 'Request a Quote', hero_cta2: 'Book a Call',
+        hero_label: 'Web Design Studio', hero_title: 'Make Your Brand Heard<br>In the Digital Jungle.', hero_subtitle: 'Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.', hero_cta1: 'Request a Quote', hero_cta2: 'Book a Call',
         prob_label: 'What You Get', prob_title: 'A Website That<br>Works For You.', prob_subtitle: 'We build digital experiences that earn trust, generate calls, and turn visitors into loyal clients.',
         prob_h1: 'Instant Trust', prob_p1: 'A premium, modern website signals credibility from the first second. Visitors trust you before they even read a word.',
         prob_h2: 'More Calls & Bookings', prob_p2: 'Every element is designed to guide visitors toward action. More inquiries, more calls, more booked appointments — on autopilot.',
@@ -1719,7 +1735,7 @@
       },
       ro: {
         nav_services: 'Servicii', nav_process: 'Proces', nav_contact: 'Contact', nav_cta: 'Cere o Ofertă',
-        hero_label: 'Studio Web Design', hero_title: 'Construim<br>Imperii Digitale.', hero_subtitle: 'Site-uri premium concepute să domine piața ta. Fiecare pixel, fiecare interacțiune — proiectat să convertească.', hero_cta1: 'Cere o Ofertă', hero_cta2: 'Programează un Apel',
+        hero_label: 'Studio Web Design', hero_title: 'Fă-ți Brandul Auzit<br>În Jungla Digitală.', hero_subtitle: 'Site-uri premium concepute să domine piața ta. Fiecare pixel, fiecare interacțiune — proiectat să convertească.', hero_cta1: 'Cere o Ofertă', hero_cta2: 'Programează un Apel',
         prob_label: 'Ce Primești', prob_title: 'Un Site Care<br>Lucrează Pentru Tine.', prob_subtitle: 'Construim experiențe digitale care câștigă încredere, generează apeluri și transformă vizitatorii în clienți fideli.',
         prob_h1: 'Încredere Instant', prob_p1: 'Un site premium și modern transmite credibilitate din prima secundă. Vizitatorii au încredere în tine înainte să citească un cuvânt.',
         prob_h2: 'Mai Multe Apeluri și Rezervări', prob_p2: 'Fiecare element este proiectat să ghideze vizitatorii spre acțiune. Mai multe cereri, mai multe apeluri, mai multe programări — pe pilot automat.',
@@ -1744,7 +1760,7 @@
       },
       de: {
         nav_services: 'Leistungen', nav_process: 'Prozess', nav_contact: 'Kontakt', nav_cta: 'Angebot Anfordern',
-        hero_label: 'Webdesign Studio', hero_title: 'Wir Bauen<br>Digitale Imperien.', hero_subtitle: 'Premium-Websites, die Ihren Markt dominieren. Jedes Pixel, jede Interaktion — auf Konversion ausgelegt.', hero_cta1: 'Angebot Anfordern', hero_cta2: 'Gespräch Buchen',
+        hero_label: 'Webdesign Studio', hero_title: 'Mach Deine Marke Hörbar<br>Im Digitalen Dschungel.', hero_subtitle: 'Premium-Websites, die Ihren Markt dominieren. Jedes Pixel, jede Interaktion — auf Konversion ausgelegt.', hero_cta1: 'Angebot Anfordern', hero_cta2: 'Gespräch Buchen',
         prob_label: 'Was Sie Bekommen', prob_title: 'Eine Website, Die<br>Für Sie Arbeitet.', prob_subtitle: 'Wir bauen digitale Erlebnisse, die Vertrauen schaffen, Anrufe generieren und Besucher in treue Kunden verwandeln.',
         prob_h1: 'Sofortiges Vertrauen', prob_p1: 'Eine premium, moderne Website signalisiert Glaubwürdigkeit ab der ersten Sekunde. Besucher vertrauen Ihnen, bevor sie ein Wort lesen.',
         prob_h2: 'Mehr Anrufe & Buchungen', prob_p2: 'Jedes Element ist darauf ausgelegt, Besucher zur Aktion zu führen. Mehr Anfragen, mehr Anrufe, mehr gebuchte Termine — auf Autopilot.',
@@ -1769,7 +1785,7 @@
       },
       it: {
         nav_services: 'Servizi', nav_process: 'Processo', nav_contact: 'Contatto', nav_cta: 'Richiedi Preventivo',
-        hero_label: 'Studio Web Design', hero_title: 'Costruiamo<br>Imperi Digitali.', hero_subtitle: 'Siti web premium progettati per dominare il tuo mercato. Ogni pixel, ogni interazione — progettato per convertire.', hero_cta1: 'Richiedi Preventivo', hero_cta2: 'Prenota una Chiamata',
+        hero_label: 'Studio Web Design', hero_title: 'Fai Sentire il Tuo Brand<br>Nella Giungla Digitale.', hero_subtitle: 'Siti web premium progettati per dominare il tuo mercato. Ogni pixel, ogni interazione — progettato per convertire.', hero_cta1: 'Richiedi Preventivo', hero_cta2: 'Prenota una Chiamata',
         prob_label: 'Cosa Ottieni', prob_title: 'Un Sito Che<br>Lavora Per Te.', prob_subtitle: 'Costruiamo esperienze digitali che guadagnano fiducia, generano chiamate e trasformano i visitatori in clienti fedeli.',
         prob_h1: 'Fiducia Istantanea', prob_p1: 'Un sito premium e moderno comunica credibilità dal primo secondo. I visitatori si fidano di te prima ancora di leggere una parola.',
         prob_h2: 'Più Chiamate e Prenotazioni', prob_p2: 'Ogni elemento è progettato per guidare i visitatori all\'azione. Più richieste, più chiamate, più appuntamenti — in automatico.',
@@ -1794,7 +1810,7 @@
       },
       fr: {
         nav_services: 'Services', nav_process: 'Processus', nav_contact: 'Contact', nav_cta: 'Demander un Devis',
-        hero_label: 'Studio Web Design', hero_title: 'Nous Bâtissons<br>Des Empires Digitaux.', hero_subtitle: 'Des sites web premium conçus pour dominer votre marché. Chaque pixel, chaque interaction — conçu pour convertir.', hero_cta1: 'Demander un Devis', hero_cta2: 'Réserver un Appel',
+        hero_label: 'Studio Web Design', hero_title: 'Fais Entendre Ta Marque<br>Dans la Jungle Numérique.', hero_subtitle: 'Des sites web premium conçus pour dominer votre marché. Chaque pixel, chaque interaction — conçu pour convertir.', hero_cta1: 'Demander un Devis', hero_cta2: 'Réserver un Appel',
         prob_label: 'Ce Que Vous Obtenez', prob_title: 'Un Site Qui<br>Travaille Pour Vous.', prob_subtitle: 'Nous créons des expériences digitales qui gagnent la confiance, génèrent des appels et transforment les visiteurs en clients fidèles.',
         prob_h1: 'Confiance Instantanée', prob_p1: 'Un site premium et moderne signale la crédibilité dès la première seconde. Les visiteurs vous font confiance avant même de lire un mot.',
         prob_h2: 'Plus d\'Appels et Réservations', prob_p2: 'Chaque élément est conçu pour guider les visiteurs vers l\'action. Plus de demandes, plus d\'appels, plus de rendez-vous — en automatique.',
@@ -1819,7 +1835,7 @@
       },
       ru: {
         nav_services: 'Услуги', nav_process: 'Процесс', nav_contact: 'Контакт', nav_cta: 'Запросить Цену',
-        hero_label: 'Студия Веб-Дизайна', hero_title: 'Мы Строим<br>Цифровые Империи.', hero_subtitle: 'Премиальные сайты, созданные для доминирования на вашем рынке. Каждый пиксель, каждое взаимодействие — спроектировано для конверсии.', hero_cta1: 'Запросить Цену', hero_cta2: 'Заказать Звонок',
+        hero_label: 'Студия Веб-Дизайна', hero_title: 'Сделай Свой Бренд Слышным<br>В Цифровых Джунглях.', hero_subtitle: 'Премиальные сайты, созданные для доминирования на вашем рынке. Каждый пиксель, каждое взаимодействие — спроектировано для конверсии.', hero_cta1: 'Запросить Цену', hero_cta2: 'Заказать Звонок',
         prob_label: 'Что Вы Получите', prob_title: 'Сайт, Который<br>Работает На Вас.', prob_subtitle: 'Мы создаём цифровые решения, которые завоёвывают доверие, генерируют звонки и превращают посетителей в лояльных клиентов.',
         prob_h1: 'Мгновенное Доверие', prob_p1: 'Премиальный, современный сайт сигнализирует о надёжности с первой секунды. Посетители доверяют вам ещё до того, как прочитают слово.',
         prob_h2: 'Больше Звонков и Записей', prob_p2: 'Каждый элемент спроектирован, чтобы направлять посетителей к действию. Больше запросов, больше звонков, больше записей — на автопилоте.',
