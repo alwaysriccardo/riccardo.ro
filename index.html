@@ -1627,7 +1627,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     // Preload lion roar audio
-    const lionRoar = new Audio('./lion-roar.mp3');
+    const lionRoar = new Audio('./lion-exhale.mp3');
     lionRoar.preload = 'auto';
     lionRoar.volume = 0.4;
     let roarPlayed = false;
@@ -1644,14 +1644,10 @@
         );
         scheduleFrame(frameIndex);
 
-        // Play lion roar once when animation nears completion
+        // Play lion exhale once when animation nears completion
         if (self.progress > 0.92 && !roarPlayed) {
           roarPlayed = true;
-          lionRoar.play().catch(() => {}); // Silent fail if blocked
-        }
-        // Reset if user scrolls back up
-        if (self.progress < 0.5) {
-          roarPlayed = false;
+          lionRoar.play().catch(() => {});
         }
       }
     });
