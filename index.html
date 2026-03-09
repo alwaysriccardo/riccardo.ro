@@ -858,6 +858,151 @@
     }
 
     /* ============================================
+       FLOATING CONTACT BUTTONS
+       ============================================ */
+    .floating-buttons {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 900;
+    }
+
+    .float-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: none;
+      cursor: pointer;
+    }
+
+    .float-btn:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    }
+
+    .float-btn svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .float-btn-wa {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+    }
+
+    .float-btn-wa svg { fill: var(--black); }
+
+    .float-btn-tg {
+      background: var(--accent);
+    }
+
+    .float-btn-tg svg { fill: var(--white); }
+
+    .float-btn-mail {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+    }
+
+    .float-btn-mail svg {
+      stroke: var(--black);
+      fill: none;
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ============================================
+       LANGUAGE SWITCHER
+       ============================================ */
+    .lang-switcher {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 900;
+    }
+
+    .lang-toggle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--black);
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lang-toggle:hover {
+      transform: translateY(-3px) scale(1.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+    }
+
+    .lang-dropdown {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 0.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lang-dropdown.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .lang-option {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      border: none;
+      background: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .lang-option:hover, .lang-option.active {
+      background: var(--gray-100);
+      color: var(--black);
+    }
+
+    @media (max-width: 600px) {
+      .floating-buttons { bottom: 1.2rem; right: 1.2rem; }
+      .lang-switcher { bottom: 1.2rem; left: 1.2rem; }
+      .float-btn, .lang-toggle { width: 44px; height: 44px; }
+    }
+
+    /* ============================================
        RESPONSIVE
        ============================================ */
     @media (max-width: 968px) {
@@ -942,10 +1087,10 @@
       <a href="#" class="navbar-logo">riccardo.ro</a>
 
       <div class="navbar-links">
-        <a href="#services">Services</a>
-        <a href="#process">Process</a>
-        <a href="#contact">Contact</a>
-        <a href="#quote" class="navbar-cta">Request a Quote</a>
+        <a href="#services" data-i18n="nav_services">Services</a>
+        <a href="#process" data-i18n="nav_process">Process</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+        <a href="#quote" class="navbar-cta" data-i18n="nav_cta">Request a Quote</a>
       </div>
 
       <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
@@ -958,10 +1103,10 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#services" onclick="closeMobile()">Services</a>
-    <a href="#process" onclick="closeMobile()">Process</a>
-    <a href="#contact" onclick="closeMobile()">Contact</a>
-    <a href="#quote" onclick="closeMobile()" class="btn-primary" style="margin-top:1rem;">Request a Quote</a>
+    <a href="#services" onclick="closeMobile()" data-i18n="nav_services">Services</a>
+    <a href="#process" onclick="closeMobile()" data-i18n="nav_process">Process</a>
+    <a href="#contact" onclick="closeMobile()" data-i18n="nav_contact">Contact</a>
+    <a href="#quote" onclick="closeMobile()" class="btn-primary" style="margin-top:1rem;" data-i18n="nav_cta">Request a Quote</a>
   </div>
 
   <!-- ============================================
@@ -973,12 +1118,12 @@
 
 
       <div class="hero-overlay">
-        <p class="hero-label" id="heroLabel">Web Design Studio</p>
-        <h1 class="hero-title" id="heroTitle">We Build<br>Digital Empires.</h1>
-        <p class="hero-subtitle" id="heroSubtitle">Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.</p>
+        <p class="hero-label" id="heroLabel" data-i18n="hero_label">Web Design Studio</p>
+        <h1 class="hero-title" id="heroTitle" data-i18n="hero_title" data-i18n-html="1">We Build<br>Digital Empires.</h1>
+        <p class="hero-subtitle" id="heroSubtitle" data-i18n="hero_subtitle">Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.</p>
         <div class="hero-buttons" id="heroButtons">
-          <a href="#quote" class="btn-primary">Request a Quote</a>
-          <a href="#contact" class="btn-secondary">Book a Call</a>
+          <a href="#quote" class="btn-primary" data-i18n="hero_cta1">Request a Quote</a>
+          <a href="#contact" class="btn-secondary" data-i18n="hero_cta2">Book a Call</a>
         </div>
       </div>
     </div>
@@ -990,9 +1135,9 @@
   <section class="section" id="problem">
     <div class="section-inner">
       <div class="reveal">
-        <p class="section-label">The Problem</p>
-        <h2 class="section-title">Your Website Is<br>Costing You Clients.</h2>
-        <p class="section-subtitle">Most businesses lose thousands in potential revenue every month because their website fails to perform.</p>
+        <p class="section-label" data-i18n="prob_label">The Problem</p>
+        <h2 class="section-title" data-i18n="prob_title" data-i18n-html="1">Your Website Is<br>Costing You Clients.</h2>
+        <p class="section-subtitle" data-i18n="prob_subtitle">Most businesses lose thousands in potential revenue every month because their website fails to perform.</p>
       </div>
 
       <div class="problem-grid">
@@ -1006,8 +1151,8 @@
               </svg>
             </div>
             <div>
-              <h4>Outdated Design</h4>
-              <p>A website that looks like it was built five years ago destroys trust instantly. First impressions are everything.</p>
+              <h4 data-i18n="prob_h1">Outdated Design</h4>
+              <p data-i18n="prob_p1">A website that looks like it was built five years ago destroys trust instantly. First impressions are everything.</p>
             </div>
           </div>
 
@@ -1019,8 +1164,8 @@
               </svg>
             </div>
             <div>
-              <h4>Painfully Slow</h4>
-              <p>Every second of load time costs you conversions. Slow sites hemorrhage visitors before they even see your offer.</p>
+              <h4 data-i18n="prob_h2">Painfully Slow</h4>
+              <p data-i18n="prob_p2">Every second of load time costs you conversions. Slow sites hemorrhage visitors before they even see your offer.</p>
             </div>
           </div>
 
@@ -1033,8 +1178,8 @@
               </svg>
             </div>
             <div>
-              <h4>Poor User Experience</h4>
-              <p>Confusing navigation, broken layouts, no mobile optimization — visitors leave frustrated and never return.</p>
+              <h4 data-i18n="prob_h3">Poor User Experience</h4>
+              <p data-i18n="prob_p3">Confusing navigation, broken layouts, no mobile optimization — visitors leave frustrated and never return.</p>
             </div>
           </div>
 
@@ -1046,19 +1191,19 @@
               </svg>
             </div>
             <div>
-              <h4>Zero Lead Generation</h4>
-              <p>A beautiful website means nothing if it doesn't convert visitors into paying clients. Traffic without conversion is waste.</p>
+              <h4 data-i18n="prob_h4">Zero Lead Generation</h4>
+              <p data-i18n="prob_p4">A beautiful website means nothing if it doesn't convert visitors into paying clients. Traffic without conversion is waste.</p>
             </div>
           </div>
         </div>
 
         <div class="problem-cta-area reveal" style="transition-delay: 0.2s">
-          <p class="problem-cta-text">
+          <p class="problem-cta-text" data-i18n="prob_cta_text" data-i18n-html="1">
             Your competitors are investing in their digital presence right now.
             <span>Don't get left behind.</span>
           </p>
           <div class="section-divider"></div>
-          <a href="#quote" class="btn-primary">Transform Your Website</a>
+          <a href="#quote" class="btn-primary" data-i18n="prob_cta_btn">Transform Your Website</a>
         </div>
       </div>
     </div>
@@ -1070,9 +1215,9 @@
   <section class="section" id="services" style="border-top: 1px solid var(--gray-200);">
     <div class="section-inner">
       <div class="reveal">
-        <p class="section-label">What We Do</p>
-        <h2 class="section-title">Precision-Crafted<br>Digital Experiences.</h2>
-        <p class="section-subtitle">Every project is custom. Every detail is intentional. We don't do templates — we build weapons.</p>
+        <p class="section-label" data-i18n="svc_label">What We Do</p>
+        <h2 class="section-title" data-i18n="svc_title" data-i18n-html="1">Precision-Crafted<br>Digital Experiences.</h2>
+        <p class="section-subtitle" data-i18n="svc_subtitle">Every project is custom. Every detail is intentional. We craft digital solutions that deliver results.</p>
       </div>
 
       <div class="services-grid">
@@ -1085,8 +1230,8 @@
               <circle cx="11" cy="11" r="2"></circle>
             </svg>
           </div>
-          <h3>Website Design</h3>
-          <p>Bespoke visual identities and UI design that stop the scroll. We create designs that feel premium, modern, and unmistakably yours.</p>
+          <h3 data-i18n="svc_c1_title">Website Design</h3>
+          <p data-i18n="svc_c1_desc">Bespoke visual identities and UI design that stop the scroll. We create designs that feel premium, modern, and unmistakably yours.</p>
         </div>
 
         <div class="service-card reveal" style="transition-delay: 0.1s">
@@ -1096,8 +1241,8 @@
               <polyline points="8 6 2 12 8 18"></polyline>
             </svg>
           </div>
-          <h3>Website Development</h3>
-          <p>Clean, semantic, blazing-fast code. Hand-crafted front-end and back-end development with performance as a non-negotiable priority.</p>
+          <h3 data-i18n="svc_c2_title">Website Development</h3>
+          <p data-i18n="svc_c2_desc">Clean, semantic, blazing-fast code. Hand-crafted front-end and back-end development with performance as a non-negotiable priority.</p>
         </div>
 
         <div class="service-card reveal" style="transition-delay: 0.15s">
@@ -1108,8 +1253,8 @@
               <line x1="6" y1="20" x2="6" y2="14"></line>
             </svg>
           </div>
-          <h3>Conversion Optimization</h3>
-          <p>Data-driven UX strategy that turns passive visitors into active leads. Every element positioned to guide the user toward action.</p>
+          <h3 data-i18n="svc_c3_title">Conversion Optimization</h3>
+          <p data-i18n="svc_c3_desc">Data-driven UX strategy that turns passive visitors into active leads. Every element positioned to guide the user toward action.</p>
         </div>
 
         <div class="service-card reveal" style="transition-delay: 0.2s">
@@ -1118,8 +1263,8 @@
               <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
             </svg>
           </div>
-          <h3>Website Redesign</h3>
-          <p>Already have a site that underperforms? We strip it down and rebuild it into a high-converting machine without losing your brand identity.</p>
+          <h3 data-i18n="svc_c4_title">Website Redesign</h3>
+          <p data-i18n="svc_c4_desc">Already have a site that underperforms? We strip it down and rebuild it into a high-converting machine without losing your brand identity.</p>
         </div>
       </div>
     </div>
@@ -1131,9 +1276,9 @@
   <section class="section" id="process" style="border-top: 1px solid var(--gray-200);">
     <div class="section-inner">
       <div class="reveal">
-        <p class="section-label">How We Work</p>
-        <h2 class="section-title">Four Steps.<br>One Vision.</h2>
-        <p class="section-subtitle">A streamlined, transparent process designed to deliver exceptional results without the complexity.</p>
+        <p class="section-label" data-i18n="proc_label">How We Work</p>
+        <h2 class="section-title" data-i18n="proc_title" data-i18n-html="1">Four Steps.<br>One Vision.</h2>
+        <p class="section-subtitle" data-i18n="proc_subtitle">A streamlined, transparent process designed to deliver exceptional results without the complexity.</p>
       </div>
 
       <div class="process-steps">
@@ -1145,8 +1290,8 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </div>
-          <h3>Strategy</h3>
-          <p>We study your market, audience, and goals to define a clear digital roadmap.</p>
+          <h3 data-i18n="proc_s1_title">Strategy</h3>
+          <p data-i18n="proc_s1_desc">We study your market, audience, and goals to define a clear digital roadmap.</p>
         </div>
 
         <div class="process-step reveal" style="transition-delay: 0.1s">
@@ -1159,8 +1304,8 @@
               <circle cx="11" cy="11" r="2"></circle>
             </svg>
           </div>
-          <h3>Design</h3>
-          <p>Pixel-perfect mockups crafted to reflect your brand at its most powerful.</p>
+          <h3 data-i18n="proc_s2_title">Design</h3>
+          <p data-i18n="proc_s2_desc">Pixel-perfect mockups crafted to reflect your brand at its most powerful.</p>
         </div>
 
         <div class="process-step reveal" style="transition-delay: 0.15s">
@@ -1171,8 +1316,8 @@
               <polyline points="8 6 2 12 8 18"></polyline>
             </svg>
           </div>
-          <h3>Development</h3>
-          <p>Clean, fast, semantic code built to perform flawlessly on every device.</p>
+          <h3 data-i18n="proc_s3_title">Development</h3>
+          <p data-i18n="proc_s3_desc">Clean, fast, semantic code built to perform flawlessly on every device.</p>
         </div>
 
         <div class="process-step reveal" style="transition-delay: 0.2s">
@@ -1183,8 +1328,8 @@
               <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
             </svg>
           </div>
-          <h3>Launch</h3>
-          <p>We deploy, test, and optimize — then watch your business grow.</p>
+          <h3 data-i18n="proc_s4_title">Launch</h3>
+          <p data-i18n="proc_s4_desc">We deploy, test, and optimize — then watch your business grow.</p>
         </div>
       </div>
     </div>
@@ -1197,10 +1342,10 @@
     <div class="section-inner">
       <div class="reveal">
         <div class="quote-deco"></div>
-        <p class="section-label" style="text-align:center;">Start Your Project</p>
-        <h2 class="quote-title">Let's Build<br>Something <span>Remarkable.</span></h2>
-        <p class="quote-subtitle">Every project is unique. Tell us about your vision and we'll craft a bespoke proposal tailored to your goals, timeline, and budget.</p>
-        <a href="#contact" class="quote-btn">Request Your Custom Quote</a>
+        <p class="section-label" style="text-align:center;" data-i18n="quote_label">Start Your Project</p>
+        <h2 class="quote-title" data-i18n="quote_title" data-i18n-html="1">Let's Build<br>Something <span>Remarkable.</span></h2>
+        <p class="quote-subtitle" data-i18n="quote_subtitle">Every project is unique. Tell us about your vision and we'll craft a bespoke proposal tailored to your goals, timeline, and budget.</p>
+        <a href="#contact" class="quote-btn" data-i18n="quote_cta">Request Your Custom Quote</a>
       </div>
     </div>
   </section>
@@ -1211,36 +1356,36 @@
   <section class="section" id="contact" style="border-top: 1px solid var(--gray-200);">
     <div class="section-inner">
       <div class="reveal">
-        <p class="section-label">Get In Touch</p>
-        <h2 class="section-title">Ready to Start?</h2>
-        <p class="section-subtitle">Fill out the form below or reach out directly. We respond within 24 hours.</p>
+        <p class="section-label" data-i18n="contact_label">Get In Touch</p>
+        <h2 class="section-title" data-i18n="contact_title">Ready to Start?</h2>
+        <p class="section-subtitle" data-i18n="contact_subtitle">Fill out the form below or reach out directly. We respond within 24 hours.</p>
       </div>
 
       <div class="contact-grid">
         <form class="contact-form reveal" style="transition-delay: 0.1s" onsubmit="event.preventDefault()">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Your full name" required>
+            <label for="name" data-i18n="form_name">Name</label>
+            <input type="text" id="name" data-i18n-placeholder="form_name_ph" placeholder="Your full name" required>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email" data-i18n="form_email">Email</label>
             <input type="email" id="email" placeholder="you@company.com" required>
           </div>
           <div class="form-group">
-            <label for="company">Company</label>
-            <input type="text" id="company" placeholder="Your company name">
+            <label for="company" data-i18n="form_company">Company</label>
+            <input type="text" id="company" data-i18n-placeholder="form_company_ph" placeholder="Your company name">
           </div>
           <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" placeholder="Tell us about your project..." required></textarea>
+            <label for="message" data-i18n="form_message">Message</label>
+            <textarea id="message" data-i18n-placeholder="form_message_ph" placeholder="Tell us about your project..." required></textarea>
           </div>
-          <button type="submit" class="form-submit">Send Message</button>
+          <button type="submit" class="form-submit" data-i18n="form_submit">Send Message</button>
         </form>
 
         <div class="contact-info reveal" style="transition-delay: 0.2s">
           <div>
-            <h3 class="contact-info-title">Let's talk about<br>your next project.</h3>
-            <p class="contact-info-desc">Whether you need a brand-new website or a complete redesign, we're ready to make it happen. No obligation, no pressure — just a conversation about possibilities.</p>
+            <h3 class="contact-info-title" data-i18n="contact_info_title" data-i18n-html="1">Let's talk about<br>your next project.</h3>
+            <p class="contact-info-desc" data-i18n="contact_info_desc">Whether you need a brand-new website or a complete redesign, we're ready to make it happen. No obligation, no pressure — just a conversation about possibilities.</p>
           </div>
 
           <div class="contact-actions">
@@ -1251,8 +1396,8 @@
                 </svg>
               </div>
               <div>
-                <p class="action-label">Call Us</p>
-                <p class="action-value">Schedule a Call</p>
+                <p class="action-label" data-i18n="action_call">Call Us</p>
+                <p class="action-value" data-i18n="action_call_val">Schedule a Call</p>
               </div>
             </a>
 
@@ -1264,7 +1409,7 @@
                 </svg>
               </div>
               <div>
-                <p class="action-label">Email Us</p>
+                <p class="action-label" data-i18n="action_email">Email Us</p>
                 <p class="action-value">hello@riccardo.ro</p>
               </div>
             </a>
@@ -1273,6 +1418,39 @@
       </div>
     </div>
   </section>
+
+  <!-- ============================================
+       FLOATING CONTACT BUTTONS
+       ============================================ -->
+  <div class="floating-buttons">
+    <!-- WhatsApp -->
+    <a href="https://wa.me/40747375851" target="_blank" rel="noopener" class="float-btn float-btn-wa" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <!-- Telegram -->
+    <a href="https://t.me/+40747375851" target="_blank" rel="noopener" class="float-btn float-btn-tg" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+    <!-- Mail -->
+    <a href="mailto:142riccardo@gmail.com" class="float-btn float-btn-mail" aria-label="Email">
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+    </a>
+  </div>
+
+  <!-- ============================================
+       LANGUAGE SWITCHER
+       ============================================ -->
+  <div class="lang-switcher" id="langSwitcher">
+    <button class="lang-toggle" id="langToggle">EN</button>
+    <div class="lang-dropdown" id="langDropdown">
+      <button class="lang-option active" data-lang="en">EN</button>
+      <button class="lang-option" data-lang="ro">RO</button>
+      <button class="lang-option" data-lang="de">DE</button>
+      <button class="lang-option" data-lang="it">IT</button>
+      <button class="lang-option" data-lang="fr">FR</button>
+      <button class="lang-option" data-lang="ru">RU</button>
+    </div>
+  </div>
 
   <!-- ============================================
        FOOTER
@@ -1484,6 +1662,212 @@
         if (target) {
           lenis.scrollTo(target, { offset: -80 });
         }
+      });
+    });
+
+    // ============================================
+    // LANGUAGE SWITCHER + i18n
+    // ============================================
+    const translations = {
+      en: {
+        nav_services: 'Services', nav_process: 'Process', nav_contact: 'Contact', nav_cta: 'Request a Quote',
+        hero_label: 'Web Design Studio', hero_title: 'We Build<br>Digital Empires.', hero_subtitle: 'Premium websites engineered to dominate your market. Every pixel, every interaction — designed to convert.', hero_cta1: 'Request a Quote', hero_cta2: 'Book a Call',
+        prob_label: 'The Problem', prob_title: 'Your Website Is<br>Costing You Clients.', prob_subtitle: 'Most businesses lose thousands in potential revenue every month because their website fails to perform.',
+        prob_h1: 'Outdated Design', prob_p1: 'A website that looks like it was built five years ago destroys trust instantly. First impressions are everything.',
+        prob_h2: 'Painfully Slow', prob_p2: 'Every second of load time costs you conversions. Slow sites hemorrhage visitors before they even see your offer.',
+        prob_h3: 'Poor User Experience', prob_p3: 'Confusing navigation, broken layouts, no mobile optimization — visitors leave frustrated and never return.',
+        prob_h4: 'Zero Lead Generation', prob_p4: "A beautiful website means nothing if it doesn't convert visitors into paying clients. Traffic without conversion is waste.",
+        prob_cta_text: "Your competitors are investing in their digital presence right now. <span>Don't get left behind.</span>", prob_cta_btn: 'Transform Your Website',
+        svc_label: 'What We Do', svc_title: 'Precision-Crafted<br>Digital Experiences.', svc_subtitle: 'Every project is custom. Every detail is intentional. We craft digital solutions that deliver results.',
+        svc_c1_title: 'Website Design', svc_c1_desc: 'Bespoke visual identities and UI design that stop the scroll. We create designs that feel premium, modern, and unmistakably yours.',
+        svc_c2_title: 'Website Development', svc_c2_desc: 'Clean, semantic, blazing-fast code. Hand-crafted front-end and back-end development with performance as a non-negotiable priority.',
+        svc_c3_title: 'Conversion Optimization', svc_c3_desc: 'Data-driven UX strategy that turns passive visitors into active leads. Every element positioned to guide the user toward action.',
+        svc_c4_title: 'Website Redesign', svc_c4_desc: 'Already have a site that underperforms? We strip it down and rebuild it into a high-converting machine without losing your brand identity.',
+        proc_label: 'How We Work', proc_title: 'Four Steps.<br>One Vision.', proc_subtitle: 'A streamlined, transparent process designed to deliver exceptional results without the complexity.',
+        proc_s1_title: 'Strategy', proc_s1_desc: 'We study your market, audience, and goals to define a clear digital roadmap.',
+        proc_s2_title: 'Design', proc_s2_desc: 'Pixel-perfect mockups crafted to reflect your brand at its most powerful.',
+        proc_s3_title: 'Development', proc_s3_desc: 'Clean, fast, semantic code built to perform flawlessly on every device.',
+        proc_s4_title: 'Launch', proc_s4_desc: 'We deploy, test, and optimize — then watch your business grow.',
+        quote_label: 'Start Your Project', quote_title: "Let's Build<br>Something <span>Remarkable.</span>", quote_subtitle: "Every project is unique. Tell us about your vision and we'll craft a bespoke proposal tailored to your goals, timeline, and budget.", quote_cta: 'Request Your Custom Quote',
+        contact_label: 'Get In Touch', contact_title: 'Ready to Start?', contact_subtitle: 'Fill out the form below or reach out directly. We respond within 24 hours.',
+        form_name: 'Name', form_name_ph: 'Your full name', form_email: 'Email', form_company: 'Company', form_company_ph: 'Your company name', form_message: 'Message', form_message_ph: 'Tell us about your project...', form_submit: 'Send Message',
+        contact_info_title: "Let's talk about<br>your next project.", contact_info_desc: "Whether you need a brand-new website or a complete redesign, we're ready to make it happen. No obligation, no pressure — just a conversation about possibilities.",
+        action_call: 'Call Us', action_call_val: 'Schedule a Call', action_email: 'Email Us'
+      },
+      ro: {
+        nav_services: 'Servicii', nav_process: 'Proces', nav_contact: 'Contact', nav_cta: 'Cere o Ofertă',
+        hero_label: 'Studio Web Design', hero_title: 'Construim<br>Imperii Digitale.', hero_subtitle: 'Site-uri premium concepute să domine piața ta. Fiecare pixel, fiecare interacțiune — proiectat să convertească.', hero_cta1: 'Cere o Ofertă', hero_cta2: 'Programează un Apel',
+        prob_label: 'Problema', prob_title: 'Site-ul Tău Îți<br>Costă Clienți.', prob_subtitle: 'Majoritatea afacerilor pierd mii de euro în venituri potențiale în fiecare lună pentru că site-ul lor nu performează.',
+        prob_h1: 'Design Învechit', prob_p1: 'Un site care arată ca și cum ar fi fost construit acum cinci ani distruge încrederea instantaneu. Prima impresie contează enorm.',
+        prob_h2: 'Extrem de Lent', prob_p2: 'Fiecare secundă de încărcare te costă conversii. Site-urile lente pierd vizitatori înainte să-ți vadă oferta.',
+        prob_h3: 'Experiență Slabă', prob_p3: 'Navigare confuză, layout-uri stricate, fără optimizare mobilă — vizitatorii pleacă frustrați și nu se mai întorc.',
+        prob_h4: 'Zero Generare de Lead-uri', prob_p4: 'Un site frumos nu înseamnă nimic dacă nu convertește vizitatori în clienți plătitori. Traficul fără conversie este pierdere.',
+        prob_cta_text: 'Competitorii tăi investesc în prezența lor digitală chiar acum. <span>Nu rămâne în urmă.</span>', prob_cta_btn: 'Transformă-ți Site-ul',
+        svc_label: 'Ce Facem', svc_title: 'Experiențe Digitale<br>de Precizie.', svc_subtitle: 'Fiecare proiect este unic. Fiecare detaliu este intenționat. Creăm soluții digitale care livrează rezultate.',
+        svc_c1_title: 'Design Web', svc_c1_desc: 'Identități vizuale personalizate și design UI care captează atenția. Creăm design-uri care se simt premium, moderne și inconfundabile.',
+        svc_c2_title: 'Dezvoltare Web', svc_c2_desc: 'Cod curat, semantic, ultra-rapid. Dezvoltare front-end și back-end realizată manual, cu performanța ca prioritate absolută.',
+        svc_c3_title: 'Optimizare Conversii', svc_c3_desc: 'Strategie UX bazată pe date care transformă vizitatorii pasivi în lead-uri active. Fiecare element poziționat să ghideze spre acțiune.',
+        svc_c4_title: 'Redesign Web', svc_c4_desc: 'Ai deja un site care nu performează? Îl reconstruim într-o mașină de conversii fără să pierzi identitatea brandului.',
+        proc_label: 'Cum Lucrăm', proc_title: 'Patru Pași.<br>O Viziune.', proc_subtitle: 'Un proces simplificat și transparent conceput să livreze rezultate excepționale fără complexitate.',
+        proc_s1_title: 'Strategie', proc_s1_desc: 'Studiem piața, audiența și obiectivele tale pentru a defini un plan digital clar.',
+        proc_s2_title: 'Design', proc_s2_desc: 'Mockup-uri pixel-perfect create să reflecte brandul tău la puterea maximă.',
+        proc_s3_title: 'Dezvoltare', proc_s3_desc: 'Cod curat, rapid și semantic construit să funcționeze impecabil pe orice dispozitiv.',
+        proc_s4_title: 'Lansare', proc_s4_desc: 'Lansăm, testăm și optimizăm — apoi privim cum afacerea ta crește.',
+        quote_label: 'Începe Proiectul', quote_title: 'Hai să Construim<br>Ceva <span>Remarcabil.</span>', quote_subtitle: 'Fiecare proiect este unic. Spune-ne viziunea ta și vom crea o propunere personalizată adaptată obiectivelor, termenelor și bugetului tău.', quote_cta: 'Cere Oferta Ta Personalizată',
+        contact_label: 'Contactează-ne', contact_title: 'Gata de Start?', contact_subtitle: 'Completează formularul sau contactează-ne direct. Răspundem în 24 de ore.',
+        form_name: 'Nume', form_name_ph: 'Numele tău complet', form_email: 'Email', form_company: 'Companie', form_company_ph: 'Numele companiei', form_message: 'Mesaj', form_message_ph: 'Povestește-ne despre proiectul tău...', form_submit: 'Trimite Mesajul',
+        contact_info_title: 'Hai să vorbim despre<br>următorul tău proiect.', contact_info_desc: 'Fie că ai nevoie de un site nou sau de un redesign complet, suntem gata să facem posibil. Fără obligații, fără presiune — doar o conversație despre posibilități.',
+        action_call: 'Sună-ne', action_call_val: 'Programează un Apel', action_email: 'Scrie-ne'
+      },
+      de: {
+        nav_services: 'Leistungen', nav_process: 'Prozess', nav_contact: 'Kontakt', nav_cta: 'Angebot Anfordern',
+        hero_label: 'Webdesign Studio', hero_title: 'Wir Bauen<br>Digitale Imperien.', hero_subtitle: 'Premium-Websites, die Ihren Markt dominieren. Jedes Pixel, jede Interaktion — auf Konversion ausgelegt.', hero_cta1: 'Angebot Anfordern', hero_cta2: 'Gespräch Buchen',
+        prob_label: 'Das Problem', prob_title: 'Ihre Website<br>Kostet Sie Kunden.', prob_subtitle: 'Die meisten Unternehmen verlieren jeden Monat Tausende an potenziellem Umsatz, weil ihre Website nicht performt.',
+        prob_h1: 'Veraltetes Design', prob_p1: 'Eine Website, die aussieht, als wäre sie vor fünf Jahren erstellt worden, zerstört sofort das Vertrauen. Der erste Eindruck zählt.',
+        prob_h2: 'Quälend Langsam', prob_p2: 'Jede Sekunde Ladezeit kostet Sie Conversions. Langsame Seiten verlieren Besucher, bevor sie Ihr Angebot sehen.',
+        prob_h3: 'Schlechte Nutzererfahrung', prob_p3: 'Verwirrende Navigation, kaputte Layouts, keine Mobile-Optimierung — Besucher gehen frustriert und kommen nie wieder.',
+        prob_h4: 'Keine Lead-Generierung', prob_p4: 'Eine schöne Website bedeutet nichts, wenn sie Besucher nicht in zahlende Kunden verwandelt. Traffic ohne Konversion ist Verschwendung.',
+        prob_cta_text: 'Ihre Konkurrenten investieren gerade jetzt in ihre digitale Präsenz. <span>Fallen Sie nicht zurück.</span>', prob_cta_btn: 'Website Transformieren',
+        svc_label: 'Was Wir Tun', svc_title: 'Präzisionsgefertigte<br>Digitale Erlebnisse.', svc_subtitle: 'Jedes Projekt ist individuell. Jedes Detail ist bewusst. Wir schaffen digitale Lösungen, die Ergebnisse liefern.',
+        svc_c1_title: 'Webdesign', svc_c1_desc: 'Maßgeschneiderte visuelle Identitäten und UI-Design, die den Scroll stoppen. Wir schaffen Designs, die premium, modern und unverwechselbar wirken.',
+        svc_c2_title: 'Webentwicklung', svc_c2_desc: 'Sauberer, semantischer, blitzschneller Code. Handgefertigte Front-end und Back-end Entwicklung mit Performance als unverzichtbare Priorität.',
+        svc_c3_title: 'Conversion-Optimierung', svc_c3_desc: 'Datengetriebene UX-Strategie, die passive Besucher zu aktiven Leads macht. Jedes Element positioniert, um den Nutzer zur Aktion zu führen.',
+        svc_c4_title: 'Website-Redesign', svc_c4_desc: 'Sie haben bereits eine unterperformende Website? Wir bauen sie zu einer hochkonvertierenden Maschine um, ohne Ihre Markenidentität zu verlieren.',
+        proc_label: 'Wie Wir Arbeiten', proc_title: 'Vier Schritte.<br>Eine Vision.', proc_subtitle: 'Ein schlanker, transparenter Prozess für außergewöhnliche Ergebnisse ohne Komplexität.',
+        proc_s1_title: 'Strategie', proc_s1_desc: 'Wir analysieren Ihren Markt, Ihre Zielgruppe und Ihre Ziele für eine klare digitale Roadmap.',
+        proc_s2_title: 'Design', proc_s2_desc: 'Pixelgenaue Mockups, die Ihre Marke in ihrer stärksten Form widerspiegeln.',
+        proc_s3_title: 'Entwicklung', proc_s3_desc: 'Sauberer, schneller, semantischer Code, der auf jedem Gerät einwandfrei funktioniert.',
+        proc_s4_title: 'Launch', proc_s4_desc: 'Wir deployen, testen und optimieren — dann sehen wir Ihrem Geschäft beim Wachsen zu.',
+        quote_label: 'Projekt Starten', quote_title: 'Lassen Sie Uns<br>Etwas <span>Außergewöhnliches</span> Bauen.', quote_subtitle: 'Jedes Projekt ist einzigartig. Erzählen Sie uns von Ihrer Vision und wir erstellen ein maßgeschneidertes Angebot für Ihre Ziele, Zeitrahmen und Budget.', quote_cta: 'Individuelles Angebot Anfordern',
+        contact_label: 'Kontakt', contact_title: 'Bereit zu Starten?', contact_subtitle: 'Füllen Sie das Formular aus oder kontaktieren Sie uns direkt. Wir antworten innerhalb von 24 Stunden.',
+        form_name: 'Name', form_name_ph: 'Ihr vollständiger Name', form_email: 'E-Mail', form_company: 'Unternehmen', form_company_ph: 'Ihr Unternehmensname', form_message: 'Nachricht', form_message_ph: 'Erzählen Sie uns von Ihrem Projekt...', form_submit: 'Nachricht Senden',
+        contact_info_title: 'Lassen Sie uns über<br>Ihr nächstes Projekt sprechen.', contact_info_desc: 'Ob Sie eine neue Website oder ein komplettes Redesign benötigen, wir sind bereit. Keine Verpflichtung, kein Druck — nur ein Gespräch über Möglichkeiten.',
+        action_call: 'Anrufen', action_call_val: 'Gespräch Vereinbaren', action_email: 'E-Mail Senden'
+      },
+      it: {
+        nav_services: 'Servizi', nav_process: 'Processo', nav_contact: 'Contatto', nav_cta: 'Richiedi Preventivo',
+        hero_label: 'Studio Web Design', hero_title: 'Costruiamo<br>Imperi Digitali.', hero_subtitle: 'Siti web premium progettati per dominare il tuo mercato. Ogni pixel, ogni interazione — progettato per convertire.', hero_cta1: 'Richiedi Preventivo', hero_cta2: 'Prenota una Chiamata',
+        prob_label: 'Il Problema', prob_title: 'Il Tuo Sito Web Ti<br>Costa Clienti.', prob_subtitle: 'La maggior parte delle aziende perde migliaia di euro in potenziali ricavi ogni mese perché il loro sito non performa.',
+        prob_h1: 'Design Obsoleto', prob_p1: 'Un sito che sembra costruito cinque anni fa distrugge la fiducia istantaneamente. La prima impressione è tutto.',
+        prob_h2: 'Dolorosamente Lento', prob_p2: 'Ogni secondo di caricamento ti costa conversioni. I siti lenti perdono visitatori prima che vedano la tua offerta.',
+        prob_h3: 'Esperienza Utente Scarsa', prob_p3: 'Navigazione confusa, layout rotti, nessuna ottimizzazione mobile — i visitatori se ne vanno frustrati e non tornano mai.',
+        prob_h4: 'Zero Generazione Lead', prob_p4: 'Un bel sito non vale nulla se non converte i visitatori in clienti paganti. Traffico senza conversione è spreco.',
+        prob_cta_text: 'I tuoi concorrenti stanno investendo nella loro presenza digitale proprio ora. <span>Non restare indietro.</span>', prob_cta_btn: 'Trasforma il Tuo Sito',
+        svc_label: 'Cosa Facciamo', svc_title: 'Esperienze Digitali<br>di Precisione.', svc_subtitle: 'Ogni progetto è personalizzato. Ogni dettaglio è intenzionale. Creiamo soluzioni digitali che producono risultati.',
+        svc_c1_title: 'Design Web', svc_c1_desc: 'Identità visive su misura e design UI che fermano lo scroll. Creiamo design che si sentono premium, moderni e inconfondibilmente tuoi.',
+        svc_c2_title: 'Sviluppo Web', svc_c2_desc: 'Codice pulito, semantico, ultra-veloce. Sviluppo front-end e back-end artigianale con la performance come priorità assoluta.',
+        svc_c3_title: 'Ottimizzazione Conversioni', svc_c3_desc: 'Strategia UX basata sui dati che trasforma visitatori passivi in lead attivi. Ogni elemento posizionato per guidare verso l\'azione.',
+        svc_c4_title: 'Redesign Web', svc_c4_desc: 'Hai già un sito che non performa? Lo ricostruiamo in una macchina ad alta conversione senza perdere la tua identità di brand.',
+        proc_label: 'Come Lavoriamo', proc_title: 'Quattro Passi.<br>Una Visione.', proc_subtitle: 'Un processo snello e trasparente progettato per risultati eccezionali senza complessità.',
+        proc_s1_title: 'Strategia', proc_s1_desc: 'Studiamo il tuo mercato, pubblico e obiettivi per definire una roadmap digitale chiara.',
+        proc_s2_title: 'Design', proc_s2_desc: 'Mockup pixel-perfect creati per riflettere il tuo brand alla sua massima potenza.',
+        proc_s3_title: 'Sviluppo', proc_s3_desc: 'Codice pulito, veloce e semantico costruito per funzionare perfettamente su ogni dispositivo.',
+        proc_s4_title: 'Lancio', proc_s4_desc: 'Lanciamo, testiamo e ottimizziamo — poi guardiamo il tuo business crescere.',
+        quote_label: 'Inizia il Progetto', quote_title: 'Costruiamo<br>Qualcosa di <span>Straordinario.</span>', quote_subtitle: 'Ogni progetto è unico. Raccontaci la tua visione e creeremo una proposta su misura per i tuoi obiettivi, tempistiche e budget.', quote_cta: 'Richiedi il Tuo Preventivo',
+        contact_label: 'Contattaci', contact_title: 'Pronto a Iniziare?', contact_subtitle: 'Compila il modulo o contattaci direttamente. Rispondiamo entro 24 ore.',
+        form_name: 'Nome', form_name_ph: 'Il tuo nome completo', form_email: 'Email', form_company: 'Azienda', form_company_ph: 'Nome della tua azienda', form_message: 'Messaggio', form_message_ph: 'Raccontaci del tuo progetto...', form_submit: 'Invia Messaggio',
+        contact_info_title: 'Parliamo del<br>tuo prossimo progetto.', contact_info_desc: 'Che tu abbia bisogno di un sito nuovo o di un redesign completo, siamo pronti. Nessun obbligo, nessuna pressione — solo una conversazione sulle possibilità.',
+        action_call: 'Chiamaci', action_call_val: 'Prenota una Chiamata', action_email: 'Scrivici'
+      },
+      fr: {
+        nav_services: 'Services', nav_process: 'Processus', nav_contact: 'Contact', nav_cta: 'Demander un Devis',
+        hero_label: 'Studio Web Design', hero_title: 'Nous Bâtissons<br>Des Empires Digitaux.', hero_subtitle: 'Des sites web premium conçus pour dominer votre marché. Chaque pixel, chaque interaction — conçu pour convertir.', hero_cta1: 'Demander un Devis', hero_cta2: 'Réserver un Appel',
+        prob_label: 'Le Problème', prob_title: 'Votre Site Web Vous<br>Coûte Des Clients.', prob_subtitle: "La plupart des entreprises perdent des milliers d'euros de revenus potentiels chaque mois parce que leur site ne performe pas.",
+        prob_h1: 'Design Obsolète', prob_p1: "Un site qui ressemble à celui d'il y a cinq ans détruit la confiance instantanément. La première impression est primordiale.",
+        prob_h2: 'Douloureusement Lent', prob_p2: 'Chaque seconde de chargement vous coûte des conversions. Les sites lents perdent des visiteurs avant même de voir votre offre.',
+        prob_h3: "Mauvaise Expérience Utilisateur", prob_p3: "Navigation confuse, mises en page cassées, aucune optimisation mobile — les visiteurs partent frustrés et ne reviennent jamais.",
+        prob_h4: 'Zéro Génération de Leads', prob_p4: "Un beau site ne vaut rien s'il ne convertit pas les visiteurs en clients payants. Du trafic sans conversion est du gaspillage.",
+        prob_cta_text: "Vos concurrents investissent dans leur présence digitale en ce moment même. <span>Ne restez pas en arrière.</span>", prob_cta_btn: 'Transformez Votre Site',
+        svc_label: 'Ce Que Nous Faisons', svc_title: 'Expériences Digitales<br>de Précision.', svc_subtitle: 'Chaque projet est sur mesure. Chaque détail est intentionnel. Nous créons des solutions digitales qui livrent des résultats.',
+        svc_c1_title: 'Design Web', svc_c1_desc: "Des identités visuelles sur mesure et du design UI qui arrête le scroll. Nous créons des designs premium, modernes et indéniablement vôtres.",
+        svc_c2_title: 'Développement Web', svc_c2_desc: "Code propre, sémantique, ultra-rapide. Développement front-end et back-end artisanal avec la performance comme priorité absolue.",
+        svc_c3_title: 'Optimisation des Conversions', svc_c3_desc: "Stratégie UX basée sur les données qui transforme les visiteurs passifs en leads actifs. Chaque élément positionné pour guider vers l'action.",
+        svc_c4_title: 'Refonte de Site', svc_c4_desc: "Vous avez déjà un site qui sous-performe ? Nous le reconstruisons en une machine à haute conversion sans perdre votre identité de marque.",
+        proc_label: 'Comment Nous Travaillons', proc_title: 'Quatre Étapes.<br>Une Vision.', proc_subtitle: 'Un processus rationalisé et transparent conçu pour des résultats exceptionnels sans complexité.',
+        proc_s1_title: 'Stratégie', proc_s1_desc: 'Nous étudions votre marché, votre audience et vos objectifs pour définir une feuille de route digitale claire.',
+        proc_s2_title: 'Design', proc_s2_desc: 'Des maquettes pixel-perfect créées pour refléter votre marque à son meilleur.',
+        proc_s3_title: 'Développement', proc_s3_desc: 'Code propre, rapide et sémantique construit pour fonctionner parfaitement sur tous les appareils.',
+        proc_s4_title: 'Lancement', proc_s4_desc: 'Nous déployons, testons et optimisons — puis regardons votre entreprise grandir.',
+        quote_label: 'Démarrez Votre Projet', quote_title: 'Construisons<br>Quelque Chose de <span>Remarquable.</span>', quote_subtitle: 'Chaque projet est unique. Parlez-nous de votre vision et nous créerons une proposition sur mesure adaptée à vos objectifs, délais et budget.', quote_cta: 'Demandez Votre Devis Personnalisé',
+        contact_label: 'Contactez-nous', contact_title: 'Prêt à Commencer ?', contact_subtitle: 'Remplissez le formulaire ou contactez-nous directement. Nous répondons sous 24 heures.',
+        form_name: 'Nom', form_name_ph: 'Votre nom complet', form_email: 'Email', form_company: 'Entreprise', form_company_ph: "Nom de votre entreprise", form_message: 'Message', form_message_ph: 'Parlez-nous de votre projet...', form_submit: 'Envoyer le Message',
+        contact_info_title: 'Parlons de<br>votre prochain projet.', contact_info_desc: "Que vous ayez besoin d'un nouveau site ou d'une refonte complète, nous sommes prêts. Sans obligation, sans pression — juste une conversation sur les possibilités.",
+        action_call: 'Appelez-nous', action_call_val: 'Planifier un Appel', action_email: 'Écrivez-nous'
+      },
+      ru: {
+        nav_services: 'Услуги', nav_process: 'Процесс', nav_contact: 'Контакт', nav_cta: 'Запросить Цену',
+        hero_label: 'Студия Веб-Дизайна', hero_title: 'Мы Строим<br>Цифровые Империи.', hero_subtitle: 'Премиальные сайты, созданные для доминирования на вашем рынке. Каждый пиксель, каждое взаимодействие — спроектировано для конверсии.', hero_cta1: 'Запросить Цену', hero_cta2: 'Заказать Звонок',
+        prob_label: 'Проблема', prob_title: 'Ваш Сайт<br>Стоит Вам Клиентов.', prob_subtitle: 'Большинство компаний теряют тысячи в потенциальном доходе каждый месяц, потому что их сайт не работает эффективно.',
+        prob_h1: 'Устаревший Дизайн', prob_p1: 'Сайт, который выглядит так, будто создан пять лет назад, мгновенно разрушает доверие. Первое впечатление — это всё.',
+        prob_h2: 'Мучительно Медленный', prob_p2: 'Каждая секунда загрузки стоит вам конверсий. Медленные сайты теряют посетителей ещё до того, как они увидят ваше предложение.',
+        prob_h3: 'Плохой UX', prob_p3: 'Запутанная навигация, сломанные макеты, отсутствие мобильной оптимизации — посетители уходят разочарованными и никогда не возвращаются.',
+        prob_h4: 'Нулевая Генерация Лидов', prob_p4: 'Красивый сайт ничего не значит, если он не превращает посетителей в платящих клиентов. Трафик без конверсии — это потеря.',
+        prob_cta_text: 'Ваши конкуренты инвестируют в свое цифровое присутствие прямо сейчас. <span>Не отставайте.</span>', prob_cta_btn: 'Преобразить Сайт',
+        svc_label: 'Что Мы Делаем', svc_title: 'Цифровые Решения<br>Высшей Точности.', svc_subtitle: 'Каждый проект уникален. Каждая деталь продумана. Мы создаём цифровые решения, которые дают результат.',
+        svc_c1_title: 'Веб-Дизайн', svc_c1_desc: 'Уникальные визуальные идентичности и UI-дизайн, которые останавливают прокрутку. Мы создаём дизайн, который ощущается премиально и современно.',
+        svc_c2_title: 'Веб-Разработка', svc_c2_desc: 'Чистый, семантический, молниеносный код. Ручная разработка фронтенда и бэкенда с производительностью как абсолютным приоритетом.',
+        svc_c3_title: 'Оптимизация Конверсий', svc_c3_desc: 'UX-стратегия на основе данных, превращающая пассивных посетителей в активных лидов. Каждый элемент направляет пользователя к действию.',
+        svc_c4_title: 'Редизайн Сайта', svc_c4_desc: 'Уже есть сайт, который не работает? Мы перестроим его в высококонверсионную машину, сохранив идентичность вашего бренда.',
+        proc_label: 'Как Мы Работаем', proc_title: 'Четыре Шага.<br>Одно Видение.', proc_subtitle: 'Оптимизированный, прозрачный процесс для исключительных результатов без лишней сложности.',
+        proc_s1_title: 'Стратегия', proc_s1_desc: 'Мы изучаем ваш рынок, аудиторию и цели для создания чёткой цифровой дорожной карты.',
+        proc_s2_title: 'Дизайн', proc_s2_desc: 'Пиксель-точные макеты, созданные отражать ваш бренд в его лучшем виде.',
+        proc_s3_title: 'Разработка', proc_s3_desc: 'Чистый, быстрый, семантический код, работающий безупречно на любом устройстве.',
+        proc_s4_title: 'Запуск', proc_s4_desc: 'Мы размещаем, тестируем и оптимизируем — а затем наблюдаем за ростом вашего бизнеса.',
+        quote_label: 'Начните Проект', quote_title: 'Давайте Создадим<br>Нечто <span>Выдающееся.</span>', quote_subtitle: 'Каждый проект уникален. Расскажите нам о вашем видении, и мы подготовим индивидуальное предложение под ваши цели, сроки и бюджет.', quote_cta: 'Запросите Индивидуальное Предложение',
+        contact_label: 'Свяжитесь с Нами', contact_title: 'Готовы Начать?', contact_subtitle: 'Заполните форму или свяжитесь с нами напрямую. Мы отвечаем в течение 24 часов.',
+        form_name: 'Имя', form_name_ph: 'Ваше полное имя', form_email: 'Эл. почта', form_company: 'Компания', form_company_ph: 'Название компании', form_message: 'Сообщение', form_message_ph: 'Расскажите о вашем проекте...', form_submit: 'Отправить Сообщение',
+        contact_info_title: 'Давайте поговорим о<br>вашем следующем проекте.', contact_info_desc: 'Нужен новый сайт или полный редизайн — мы готовы. Без обязательств, без давления — просто разговор о возможностях.',
+        action_call: 'Позвоните', action_call_val: 'Запланировать Звонок', action_email: 'Напишите'
+      }
+    };
+
+    let currentLang = 'en';
+    const langToggle = document.getElementById('langToggle');
+    const langDropdown = document.getElementById('langDropdown');
+
+    // Toggle dropdown
+    langToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      langDropdown.classList.toggle('open');
+    });
+
+    // Close on outside click
+    document.addEventListener('click', () => {
+      langDropdown.classList.remove('open');
+    });
+
+    // Language switch
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = btn.dataset.lang;
+        if (lang === currentLang) { langDropdown.classList.remove('open'); return; }
+        currentLang = lang;
+        langToggle.textContent = lang.toUpperCase();
+
+        // Update active class
+        document.querySelectorAll('.lang-option').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Apply translations
+        const t = translations[lang];
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          if (t[key] !== undefined) {
+            if (el.dataset.i18nHtml) {
+              el.innerHTML = t[key];
+            } else {
+              el.textContent = t[key];
+            }
+          }
+        });
+        // Placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.dataset.i18nPlaceholder;
+          if (t[key] !== undefined) el.placeholder = t[key];
+        });
+
+        langDropdown.classList.remove('open');
       });
     });
   </script>
